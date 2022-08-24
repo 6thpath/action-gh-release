@@ -10,13 +10,9 @@
 </p>
 
 <div align="center">
-  <img src="demo.png"/>
-</div>
-
-<div align="center">
-  <a href="https://github.com/softprops/action-gh-release/actions">
-		<img src="https://github.com/softprops/action-gh-release/workflows/Main/badge.svg"/>
-	</a>
+  <a href="https://github.com/6thpath/action-gh-release/actions">
+  <img src="https://github.com/6thpath/action-gh-release/workflows/Main/badge.svg"/>
+ </a>
 </div>
 
 <br />
@@ -41,9 +37,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: 6thpath/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
 ```
 
@@ -62,9 +58,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: 6thpath/action-gh-release@v1
 ```
 
 ### ⬆️ Uploading release assets
@@ -88,13 +84,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Build
         run: echo ${{ github.sha }} > Release.txt
       - name: Test
         run: cat Release.txt
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: 6thpath/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: Release.txt
@@ -112,13 +108,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Build
         run: echo ${{ github.sha }} > Release.txt
       - name: Test
         run: cat Release.txt
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: 6thpath/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
@@ -144,11 +140,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Generate Changelog
         run: echo "# Good things have arrived" > ${{ github.workspace }}-CHANGELOG.txt
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: 6thpath/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           body_path: ${{ github.workspace }}-CHANGELOG.txt
@@ -202,17 +198,6 @@ The following outputs can be accessed via `${{ steps.<step-id>.outputs }}` from 
 
 As an example, you can use `${{ fromJSON(steps.<step-id>.outputs.assets)[0].browser_download_url }}` to get the download URL of the first asset.
 
-#### environment variables
-
-The following `step.env` keys are allowed as a fallback but deprecated in favor of using inputs.
-
-| Name                | Description                                                                                |
-| ------------------- | ------------------------------------------------------------------------------------------ |
-| `GITHUB_TOKEN`      | GITHUB_TOKEN as provided by `secrets`                                                      |
-| `GITHUB_REPOSITORY` | Name of a target repository in `<owner>/<repo>` format. defaults to the current repository |
-
-> **⚠️ Note:** This action was previously implemented as a Docker container, limiting its use to GitHub Actions Linux virtual environments only. With recent releases, we now support cross platform usage. You'll need to remove the `docker://` prefix in these versions
-
 ### Permissions
 
 This Action requires the following permissions on the GitHub integration token:
@@ -231,5 +216,3 @@ permissions:
 ```
 
 [GitHub token permissions](https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token) can be set for an individual job, workflow, or for Actions as a whole.
-
-Doug Tangren (softprops) 2019
